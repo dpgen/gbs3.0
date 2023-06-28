@@ -316,6 +316,13 @@ legend {
   transition: color 0.3s ease;
   left: 60px;
 }
+.school_helper {
+  top: 100px;
+}
+#img-select{
+  margin-right: 7px;
+  /* margin-top: 5px; */
+}
 input[type="text"]:focus + .input-field_helper {
   color: #282828;
   opacity: 1 !important;
@@ -412,7 +419,8 @@ button[type="submit"]:hover {
 
 .btn-input {
   width: 50%;
-  margin-left: 20%;
+  margin-left: 25%;
+  /* margin-right: auto; */
   background: #FFFFFF;
   border: 1px solid #D33F74;
   border-radius: 8px;
@@ -561,9 +569,10 @@ footer .social {
   border: 1px dashed #CECECE;
   border-radius: 4px;
   margin-top: 7px;
-  width: 375px;
-  margin-left: 10%;
-  height: 250px;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 236px;
 }
 
 .cropit-preview-image-container {
@@ -673,8 +682,8 @@ button[type="submit"] {
     text-align: center;
   }
   .cropit-preview {
-    width: 375px;
-    height: 250px;
+    width: 400px;
+    height: 236px;
     margin-left: 20%;
   }
   .arrow-back {
@@ -699,8 +708,8 @@ button[type="submit"] {
     font-size: 28px !important;
   }
   .cropit-preview {
-    width: 240px;
-    height: 160px;
+    width: 230px;
+    height: 135.76px;
     margin-left: 5%;
   }
   .under p {
@@ -840,4 +849,17 @@ button[type="submit"] {
 @font-face {
   font-family: "BelganAesthetic";
   src: url("../fonts/Belgan_Aesthetic/Belgan\ Aesthetic.ttf");
+}
+
+/* Gothic */
+/* Bold */
+@font-face {
+  font-family: "GothicBold";
+  src: url("../fonts/Gothic/gothicb.ttf");
+}
+
+/* Medium */
+@font-face {
+  font-family: "GothicRegular";
+  src: url("../fonts/Gothic/GOTHIC.TTF");
 }
