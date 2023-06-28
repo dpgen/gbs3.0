@@ -67,6 +67,7 @@ $(function () {
   $("form").submit(function (e) {
     e.preventDefault();
     var username = $("#fullname").val();
+    var school = $("#school").val();
     var testimony = ""; /* $("#testimony").val();*/
     // Move cropped image data to hidden input
     var imageData = $(".image-editor").cropit("export", {
@@ -79,9 +80,9 @@ $(function () {
     button.attr("disabled", "disabled").html("...processing");
 
     // x, y, width, height
-    const picData = [171, 205, 731, 489];
+    const picData = [222, 207, 637, 376];
     // name, y, x
-    const nameData = [`${username}`, 661, 614, testimony];
+    const nameData = [`${username}`, 619, 495, school];
     // const nameData = [username + ",", 1295, 685, ministryName];
 
     createDP(username, imageData, picData, nameData, function (url) {
@@ -198,7 +199,7 @@ $(function () {
   function createDP(username, imageUrl, pic, name, cb) {
     var canvas = document.createElement("canvas"),
       ctx = canvas.getContext("2d"),
-      imageCount = 4,
+      imageCount = 3,
       view = {
         x: pic[0],
         y: pic[1],
@@ -211,7 +212,7 @@ $(function () {
       };
 
     var userImg = loadImage(imageUrl);
-    var nameBackImg = loadImage("./src/img/name_background.png");
+    // var nameBackImg = loadImage("./src/img/name_background.png");
     var borderImg = loadImage("./src/img/border.png");
     var frameImg = loadImage("./src/img/firstFrame.png");
 
@@ -237,8 +238,8 @@ $(function () {
       //Add border
       ctx.drawImage(borderImg, view.x-2, view.y-2, view.width+4, view.height+4);
 
-      //Add Name background
-      ctx.drawImage(nameBackImg, 317, 638.5, 594, 130);
+      // //Add Name background
+      // ctx.drawImage(nameBackImg, 317, 638.5, 594, 130);
       // ctx.save();
       // ctx.beginPath();
       // ctx.arc(280.2, 337, 118, 0, Math.PI * 2, true);
@@ -261,25 +262,41 @@ $(function () {
       //Write user name
       ctx.textBaseline = "top";
       ctx.textAlign = "center";
-      ctx.font = "58px BelganAesthetic";
+      ctx.font = "33.5px GothicBold";
       ctx.fillStyle = "#ffffff";
       var canvasText = name[0];
+      var from = " from";
 
-      // Translate to the desired position
-      ctx.translate(name[2], name[1]);
+      // // Translate to the desired position
+      // ctx.translate(name[2], name[1]);
 
-      // Rotate the canvas by 2 degrees
-      ctx.rotate(-Math.PI / 180);
-      
-      ctx.fillText(canvasText, 0, 0);
+      // // Rotate the canvas by 2 degrees
+      // ctx.rotate(-Math.PI / 180);
+
+      ctx.fillText(canvasText, name[2], name[1]);
+
+      // Calculate the width of the text before "From"
+      var textBeforeFromWidth = ctx.measureText(canvasText).width;
+
+      // Calculate the width of "From"
+      var fromWidth = ctx.measureText(from).width;
+
+      // Calculate the starting position for "From"
+      var fromStartX = name[2] + (textBeforeFromWidth / 2) + (fromWidth / 2);
+
+      // Draw "From" with the desired font color and the calculated starting position
+      ctx.fillStyle = "#ff893d";
+      ctx.fillText(from, fromStartX, name[1]);
+
       // ctx.renderText(name[3], name[2], name[1], 1);
 
       // Restore the context state
-      ctx.restore();
+      // ctx.restore();
 
       //Write testimony
-      // ctx.font = "38px Poppins-SemiBold";
-      // ctx.fillStyle = "#060c12";
+      ctx.font = "53.5px GothicRegular";
+      ctx.fillStyle = "#ffffff";
+      ctx.fillText(name[3], 539.5, 661);
       // wrapText(ctx, name[3], 540, 709, 30, 50, 0);
 
       cb(canvas.toDataURL("image/jpeg", 1.0));

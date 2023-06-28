@@ -109,9 +109,21 @@
                 class="form-control2"
                 placeholder="Name"
                 required
-                maxlength="15"
+                maxlength="30"
               />
               <span class="input-field_helper hidden">Name</span>
+
+              <br />
+
+              <input
+                type="text"
+                id="school"
+                class="form-control2"
+                placeholder="School"
+                required
+                maxlength="19"
+              />
+              <span class="input-field_helper school_helper hidden">School</span>
               <!-- <p
                 style="
                   float: right;
@@ -139,7 +151,8 @@
                 class="btn btn-input fileinput-button"
                 style="cursor: pointer"
               >
-                <i class="ti-image"></i>
+                <!-- <i class="ti-image"></i> -->
+                <img id="img-select" src="./src/img/img.png" alt="Select Image" />
                 <span>Select image</span>
                 <input
                   id="file"
@@ -147,6 +160,7 @@
                   type="file"
                   class="cropit-image-input"
                   required=""
+                  style="left: 0;"
                 />
                 <!-- <input
                   type="hidden"
@@ -160,7 +174,8 @@
                   class="btn-input change hide"
                   style="cursor: pointer"
                 >
-                  <i class="ti-image"></i>
+                  <!-- <i class="ti-image"></i> -->
+                  <img id="img-select" src="./src/img/img.png" alt="Select Image" />
                   <span>Change Image</span>
                 </span>
               </div>
@@ -192,6 +207,12 @@
             </div>
           </div>
         </form>
+        <p style="font-family: GothicBold; visibility: hidden">
+            t
+        </p>
+        <p style="font-family: GothicRegular; visibility: hidden">
+            t
+        </p>
       </section>
     </main>
 
