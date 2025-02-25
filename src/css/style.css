@@ -572,7 +572,7 @@ footer .social {
   width: 400px;
   margin-left: auto;
   margin-right: auto;
-  height: 236px;
+  height: 245.8px;
 }
 
 .cropit-preview-image-container {
@@ -683,7 +683,7 @@ button[type="submit"] {
   }
   .cropit-preview {
     width: 400px;
-    height: 236px;
+    height: 245.8px;
     margin-left: 20%;
   }
   .arrow-back {
@@ -709,7 +709,7 @@ button[type="submit"] {
   }
   .cropit-preview {
     width: 230px;
-    height: 135.76px;
+    height: 141.36px;
     margin-left: 5%;
   }
   .under p {
@@ -863,3 +863,18 @@ button[type="submit"] {
   font-family: "GothicRegular";
   src: url("../fonts/Gothic/GOTHIC.TTF");
 }
+
+/* Brooklyn Heavy */
+/* Regular */
+@font-face {
+  font-family: "BrooklynHeavy";
+  src: url("../fonts/Brooklyn_Heavy/Brooklyn-Heavy.ttf");
+}
+
+/* AlbertSans Regular */
+/* Regular */
+@font-face {
+  font-family: "AlbertSansRegular";
+  src: url("../fonts/AlbertSans_Regular/AlbertSans-Regular.ttf");
+}
+

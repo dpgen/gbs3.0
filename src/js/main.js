@@ -36,9 +36,9 @@ $(function () {
   }
 
   /* global variables */
-  const today = new Date();
-  const eventDate = new Date("2020/08/09");
-  const daysToGo = DifferenceInDays(today, eventDate);
+  // const today = new Date();
+  // const eventDate = new Date("2020/08/09");
+  // const daysToGo = DifferenceInDays(today, eventDate);
   const button = $(".create-dp");
   const fileInput = $("input[type=file]");
   const preview = $("img");
@@ -67,8 +67,8 @@ $(function () {
   $("form").submit(function (e) {
     e.preventDefault();
     var username = $("#fullname").val();
-    var school = $("#school").val();
-    var testimony = ""; /* $("#testimony").val();*/
+    var school = ""; // $("#school").val();
+    var testimony = $("#testimony").val();
     // Move cropped image data to hidden input
     var imageData = $(".image-editor").cropit("export", {
       type: "image/jpeg",
@@ -80,9 +80,9 @@ $(function () {
     button.attr("disabled", "disabled").html("...processing");
 
     // x, y, width, height
-    const picData = [222, 207, 637, 376];
+    const picData = [300, 735, 480, 295];
     // name, y, x
-    const nameData = [`${username}`, 619, 495, school];
+    const nameData = [`${username}`, 1048, 540, testimony];
     // const nameData = [username + ",", 1295, 685, ministryName];
 
     createDP(username, imageData, picData, nameData, function (url) {
@@ -129,6 +129,29 @@ $(function () {
 
   //   $(".cropit-preview-image").attr("src", "");
   // });
+  
+  function countLines(text, maxWidth) {
+    var words = text.split(" ").filter(word => word!=="");
+    var line = "";
+    let count = 0;
+    // console.log(words)
+    // console.log(text.length)
+
+    for (var n = 0; n < words.length; n++) {
+      var testLine = line + words[n];
+      if(n != words.length-1){
+         testLine = testLine + " ";
+      }
+      if (testLine.length > maxWidth && n > 0) {
+        // console.log(line)
+        count++;
+        line = words[n] + " ";
+      } else {
+        line = testLine;
+      }
+    }
+    return (count + 1);
+  }
 
   function b64toBlob(b64Data, contentType, sliceSize) {
     contentType = contentType || "";
@@ -196,15 +219,47 @@ $(function () {
     };
   }
 
-  function createDP(username, imageUrl, pic, name, cb) {
+  function createDP(username, imageUrl, pic, name, cb) {    
+    const numberOfLines = countLines(name[3], 47);
+
+    let frameUrl = "";
+    let picX = pic[0];
+    let picY = pic[1];
+    let picWidth = pic[2];
+    let picHeight = pic[3];
+    let nameY = name[1];
+    let testimonyY = 615;
+    switch (numberOfLines) {
+      case 3:
+        frameUrl = "./src/img/thirdFrame.png";
+        picX = 305;
+        picY = 762;
+        picWidth = 470;
+        picHeight = 287;
+        nameY = 1068;
+        testimonyY = 578;
+        break;
+      case 2:
+        frameUrl = "./src/img/secondFrame.png";
+        picX = 305;
+        picY = 762;
+        picWidth = 470;
+        picHeight = 287;
+        nameY = 1068;
+        break;
+      default:
+        frameUrl = "./src/img/firstFrame.png"; 
+        break;
+    }
+
     var canvas = document.createElement("canvas"),
       ctx = canvas.getContext("2d"),
-      imageCount = 3,
+      imageCount = 2,
       view = {
-        x: pic[0],
-        y: pic[1],
-        width: pic[2],
-        height: pic[3],
+        x: picX,
+        y: picY,
+        width: picWidth,
+        height: picHeight,
       },
       innerText = {
         x: view.width * 0.7,
@@ -213,8 +268,8 @@ $(function () {
 
     var userImg = loadImage(imageUrl);
     // var nameBackImg = loadImage("./src/img/name_background.png");
-    var borderImg = loadImage("./src/img/border.png");
-    var frameImg = loadImage("./src/img/firstFrame.png");
+    // var borderImg = loadImage("./src/img/border.png");
+    var frameImg = loadImage(frameUrl);
 
     function loadImage(src) {
       var img = new Image();
@@ -238,7 +293,7 @@ $(function () {
       ctx.drawImage(userImg, view.x, view.y, view.width, view.height);
 
       //Add border
-      ctx.drawImage(borderImg, view.x-2, view.y-2, view.width+4, view.height+4);
+      // ctx.drawImage(borderImg, view.x-2, view.y-2, view.width+4, view.height+4);
 
       // //Add Name background
       // ctx.drawImage(nameBackImg, 317, 638.5, 594, 130);
@@ -264,10 +319,10 @@ $(function () {
       //Write user name
       ctx.textBaseline = "top";
       ctx.textAlign = "center";
-      ctx.font = "33.5px GothicBold";
-      ctx.fillStyle = "#ffffff";
-      var canvasText = name[0];
-      var from = " from";
+      ctx.font = "23.04px BrooklynHeavy";
+      ctx.fillStyle = "#808080";
+      var canvasText = name[0].toUpperCase();
+      // var from = " from";
 
       // // Translate to the desired position
       // ctx.translate(name[2], name[1]);
@@ -275,20 +330,20 @@ $(function () {
       // // Rotate the canvas by 2 degrees
       // ctx.rotate(-Math.PI / 180);
 
-      ctx.fillText(canvasText, name[2], name[1]);
+      ctx.fillText(canvasText, name[2], nameY);
 
-      // Calculate the width of the text before "From"
-      var textBeforeFromWidth = ctx.measureText(canvasText).width;
+      // // Calculate the width of the text before "From"
+      // var textBeforeFromWidth = ctx.measureText(canvasText).width;
 
-      // Calculate the width of "From"
-      var fromWidth = ctx.measureText(from).width;
+      // // Calculate the width of "From"
+      // var fromWidth = ctx.measureText(from).width;
 
-      // Calculate the starting position for "From"
-      var fromStartX = name[2] + (textBeforeFromWidth / 2) + (fromWidth / 2);
+      // // Calculate the starting position for "From"
+      // var fromStartX = name[2] + (textBeforeFromWidth / 2) + (fromWidth / 2);
 
-      // Draw "From" with the desired font color and the calculated starting position
-      ctx.fillStyle = "#ff893d";
-      ctx.fillText(from, fromStartX, name[1]);
+      // // Draw "From" with the desired font color and the calculated starting position
+      // ctx.fillStyle = "#ff893d";
+      // ctx.fillText(from, fromStartX, name[1]);
 
       // ctx.renderText(name[3], name[2], name[1], 1);
 
@@ -296,10 +351,10 @@ $(function () {
       // ctx.restore();
 
       //Write testimony
-      ctx.font = "53.5px GothicRegular";
-      ctx.fillStyle = "#ffffff";
-      ctx.fillText(name[3], 539.5, 661);
-      // wrapText(ctx, name[3], 540, 709, 30, 50, 0);
+      ctx.font = "33.33px AlbertSansRegular";
+      ctx.fillStyle = "#000000";
+      // ctx.fillText(name[3], 539.5, 661);
+      wrapText(ctx, name[3], 540, testimonyY, 47, 38.7, 0);
 
       cb(canvas.toDataURL("image/jpeg", 1.0));
     }
@@ -310,7 +365,10 @@ $(function () {
     var line = "";
 
     for (var n = 0; n < words.length; n++) {
-      var testLine = line + words[n] + " ";
+      var testLine = line + words[n];
+      if(n != words.length-1){
+         testLine = testLine + " ";
+      }
       // var metrics = context.measureText(testLine);
       // var testWidth = metrics.width;
       if (testLine.length > maxWidth && n > 0) {
