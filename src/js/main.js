@@ -228,6 +228,8 @@ $(function () {
 
       canvas.width = frameImg.width;
       canvas.height = frameImg.height;
+      console.log(frameImg.width)
+      console.log(frameImg.height)
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
